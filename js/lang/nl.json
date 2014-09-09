@@ -1,0 +1,64 @@
+{
+    "quit": "Afsluiten",
+    "cancel": "Annuleer",
+    "beforeQuit": "deze website afsluiten?",
+    "loading": "Een ogenblik geduld...",
+    "loadingVideo": "Video wordt geladen, een ogenblik geduld",
+    "searchLoading": "Zoeken...",
+    "noResults": "Geen resultaten gevonden.",
+
+    "search": "Zoeken",
+    "movies": "Films",
+
+    "subtitledIn": "Ondertiteld in",
+    "quality": "Kwaliteit",
+    "watchItNow": "Nu kijken",
+    "durationUnit": "min",
+
+    "connecting": "Verbinden...",
+    "startingDownload": "Starten met downloaden...",
+    "downloading": "Downloaden...",
+
+    "legalDisclaimer": "deze website downloadt en uploadt films met behulp van torrents, dit kan illegaal zijn in jouw land.",
+    "legalDisclaimerResponsible": "Wij zijn niet verantwoordelijk voor mogelijke wettelijke problemen, dus lees de voorwaarden goed alvorens de applicatie te gebruiken.",
+    "legalDisclaimerAccept": "Ik begrijp dit en wil deze website gebruiken",
+    "legalDisclaimerCancel": "Sluit deze website",
+
+    "genres": {
+        "all": "Populair",
+        "action": "Actie",
+        "adventure": "Avontuur",
+        "animation": "Animatie",
+        "biography": "Biografie",
+        "comedy": "Komedie",
+        "crime": "Misdaad",
+        "documentary": "Documentaire",
+        "drama": "Drama",
+        "family": "Familie",
+        "fantasy": "Fantasie",
+        "film-noir": "Film-Noir",
+        "history": "Geschiedenis",
+        "horror": "Horror",
+        "music": "Muziek",
+        "musical": "Musical",
+        "mystery": "Mystery",
+        "romance": "Romantiek",
+        "sci-fi": "Sci-Fi",
+        "short": "Korte film",
+        "sport": "Sport",
+        "thriller": "Thriller",
+        "war": "Oorlog",
+        "western": "Western"
+    },
+
+    "sort": {
+        "date": "Datum",
+        "seeds": "delers",
+        "peers": "downloaders",
+        "size": "Groote",
+        "alphabet": "Alfabetisch",
+        "rating": "IMDB waardering",
+        "downloaded": "gedownload",
+        "year": "Jaartal"
+    }
+}
