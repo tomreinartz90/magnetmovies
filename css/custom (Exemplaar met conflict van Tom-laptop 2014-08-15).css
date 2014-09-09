@@ -1,0 +1,172 @@
+
+.filmitem {
+
+    display: block;
+
+    margin-bottom: 2rem;
+
+    position: relative;
+
+}
+
+.hideXBMC { 
+ display: none;   
+}
+
+h6 {
+font-size: 0.8rem;
+}
+
+h5 { 
+ margin-bottom: 0;   
+}
+
+[class*="column"] + [class*="column"]:last-child {
+float: left;
+}
+
+.preloader {
+
+    display: block;
+
+    width: 40px;
+
+    height: 40px;
+
+    position: absolute;
+
+    top: 50%;
+
+    left: 50%;
+
+    margin-top: -20px;
+
+    margin-left: -20px;
+
+    border: solid 3px;
+
+    border-color: #555555 white;
+
+    border-radius: 1000px;
+
+    -webkit-animation: spin 2s linear infinite;
+
+    -moz-animation: spin 2s linear infinite;
+
+    animation: spin 2s linear infinite;
+    
+    z-index: 1000;
+
+}
+
+.switch label {
+
+    color: white!important;
+
+    text-indent: 60px!important;
+
+}
+
+@-moz-keyframes spin {
+
+    100% {
+
+        -moz-transform: rotate(360deg);
+
+    }
+
+}
+
+@-webkit-keyframes spin {
+
+    100% {
+
+        -webkit-transform: rotate(360deg);
+
+    }
+
+}
+
+@keyframes spin {
+
+    100% {
+
+        -webkit-transform: rotate(360deg);
+
+        transform: rotate(360deg);
+
+    }
+
+}
+
+.switch {
+
+    margin: 0.5em 0;
+
+}
+
+.off-canvas-wrap,
+
+.inner-wrap,
+
+body {
+
+    height: 100%;
+
+    /*    overflow: scroll;*/
+
+}
+
+#content {
+
+    overflow-y: scroll;
+
+    height: 100%;
+
+}
+
+.filmitem h5 {
+
+    height: 1.4em;
+
+    overflow: hidden;
+
+}
+
+/*
+.tab-bar {
+ position: fixed; 
+top:10;
+    left:0;
+}*/
+
+div.switch label {
+
+    width: 14rem;
+
+}
+
+/*menu*/
+
+.off-canvas-list .content { 
+ display: none;   
+}
+
+.off-canvas-list .open .content { 
+ display: block;   
+}
+
+.off-canvas-list p { 
+ padding: 0 1em; 
+    color: white;
+}
+
+/*modal*/
+
+#myModal a[href^="magnet:"] { 
+ display: inline-block;
+}
+#myModal .button { 
+display: none;
+}
+
