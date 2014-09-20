@@ -34,21 +34,6 @@ var theMovieDB = {
     aantalItems: 0
 }
 
-var youtube = {
-    url: "https://www.googleapis.com/youtube/v3/search",
-    settings: {
-        order: "relevance",
-        type: "video",
-        regionCode: 'us',
-        videoDefinition: "high",
-        videoEmbeddable: "true",
-        videoCaption: "closedCaption",
-        apiKey: "AIzaSyDYl5xLXZEjBAlC-Cva2u3h37BZLm88p7o",
-        part: "snippet"
-    },
-    aantalItems: 0
-}
-
 var xbmc = {
     url: null,
     movies: {
@@ -269,7 +254,7 @@ function getEztvEpisodes(imdbID) {
                     epi.naam = value.title;
                     epi.uitgebracht = value.first_aired;
                     epi.genre = value.genres;
-                    epi.magnetLink = [];
+                    epi.magnetLink = value.torrents;
                     epi.plot = value.overview;
                     epi.tvdbid = value.tvdb_id;
                     //                    serieslijst[imdbID].season[value.season].episode[value.episode];
@@ -358,14 +343,6 @@ function setMovieDBData(imdbID) {
         console.log("Geen imdbID om informatie op te halen.");
     } else {
 
-        // stel headers in .
-        /*$.ajaxSetup({
-          headers : {
-            'api_key' : theMovieDB.settings.api_key,
-          }
-        });
-        */
-
         //vorm url om JSON data op te halen
         var url = theMovieDB.url + imdbID;
 
@@ -377,8 +354,7 @@ function setMovieDBData(imdbID) {
             filmlijst[imdbID].plot = data.overview;
             filmlijst[imdbID].poster = theMovieDB.imgUrl + data.poster_path;
 
-
-            vidUrl = theMovieDB.url + data.id + "/videos"
+            vidUrl = theMovieDB.url + data.id + "/videos";
 
             //haal trailer info op
             $.getJSON(vidUrl, {
@@ -394,7 +370,6 @@ function setMovieDBData(imdbID) {
             //tel één op bij het aantal items
             theMovieDB.aantalItems += 1;
 
-
             //als alle films zijn bijgewerkt toon dan de films. 
             if (theMovieDB.aantalItems == yify.aantalItems) {
                 toonFilms(filmlijst);
@@ -406,49 +381,6 @@ function setMovieDBData(imdbID) {
 
     }
 }
-
-
-
-/** 
- *Haal youtube id op van trailers en plaats deze in het film object
- *@param string naam van de film
- *@param imdbID
- *@return json Tweets
- */
-
-//functie is verouderd en word niet meer gebruikt
-function setYoutubeData(filmnaam, imdbID) {
-
-    url = youtube.url;
-    search = filmnaam + " official movie trailer"
-    $.getJSON(url, {
-        part: youtube.settings.part,
-        q: search,
-        type: youtube.settings.type,
-        order: youtube.settings.order,
-        videoCaption: "closedCaption",
-        videoDefinition: youtube.settings.videoDefinition,
-        videoEmbeddable: youtube.settings.videoEmbeddable,
-        regionCode: youtube.settings.us,
-        key: youtube.settings.apiKey
-    }).done(function (data) {
-        //controlleer of alle data succesvol is binnengekomen.
-
-        youtube.aantalItems += 1;
-        if (data.items.length > '1') {
-            filmlijst[imdbID].trailer = data.items[1].id.videoId;
-            //console.log(data.items[0].id.videoId);
-            if (youtube.aantalItems == theMovieDB.aantalItems) {
-                status = "klaar";
-            } else {
-                status = "youtube data ophalen";
-            }
-        } else {
-            console.log("fout bij ophalen van trailer voor " + imdbID + filmnaam);
-        }
-    });
-}
-
 
 
 
@@ -476,8 +408,6 @@ function maakFilmLijst(data) {
             if (filmlijst[value.ImdbCode] != undefined) {
                 filmBestaat = true;
             }
-            //            console.log(filmlijst[value.ImdbCode]);
-            //console.log(value.ImdbCode + " " + filmBestaat);
 
             //maak een schoon film object aan;
             film = {
@@ -499,7 +429,7 @@ function maakFilmLijst(data) {
             }
 
 
-            //yify data
+            //yify data in film object stoppen
             film.naam = value.MovieTitleClean;
             film.geupload = value.DateUploaded;
             film.uitgebracht = value.MovieYear;
@@ -513,12 +443,6 @@ function maakFilmLijst(data) {
             //stop de film in de filmlijst
             filmlijst[value.ImdbCode] = film;
 
-            //tel één item op bij de Yify items. 
-            yify.aantalItems += 1;
-
-            //voeg iMDB data toe aan de filmitems.
-            setMovieDBData(film.imdbID);
-            //setYoutubeData(film.naam, film.imdbID);
         });
     } else {
         status = "niet meer films beschikbaar";
@@ -634,63 +558,143 @@ $('#XBMCadress').focusout(function () {
 $("#content").on("click", ".filmitem", function (event) {
     //event.preventDefault();
     var id = $(this).data("imdbid");
-    var id2 = $(this).data("episode");
+    var type = '';
+    console.log(serieslijst[id]);
     if (filmlijst[id] != undefined) {
         //filmdetails
-        console.log(filmlijst[id]);
         data = filmlijst[id];
-    } else if (serieslijst[id].episodes[id2] != undefined) {
-        //afleveringsdetails
-        data = serieslijst[id].episodes[id2];
+        type = 'film';
     } else if (serieslijst[id] != undefined) {
-        //afleveringen
-        console.log(serieslijst[id].episodes);
-        toonFilms(serieslijst[id].episodes);
-        return;
+        //afleveringsdetails
+        data = serieslijst[id];
+        type = 'serie';
     }
+    if (type == 'film') {
+        //filmitem
+        //wijzig de informatie in de popup zodat deze past bij het filmitem.
+        $('#filmModal #titel').html(data.naam);
+        $('#filmModal #plot').html(data.plot);
+        $('#filmModal #genre').html(data.genre);
+        $('#filmModal #kwaliteit').html(data.kwaliteit);
+        $('#filmModal #rating').html(data.rating);
+        $('#filmModal #geupload').html(data.geupload);
 
-    //console.log(data);
-    //wijzig de informatie in de popup zodat deze past bij het filmitem.
-    $('#myModal #titel').html(data.naam);
-    $('#myModal #plot').html(data.plot);
-    $('#myModal #genre').html(data.genre);
-    $('#myModal #kwaliteit').html(data.kwaliteit);
-    $('#myModal #rating').html(data.rating);
-    $('#myModal #geupload').html(data.geupload);
-
-    $('#myModal #trailer').attr("src", "http://www.youtube.com/embed/" + data.trailer);
-    $('#myModal .button').attr("href", "#");
-    if (localStorage.getItem("downloadable") == "true") {
-        $('#myModal #download720p').attr("href", data.magnetLink["720p"]);
-        $('#myModal #download1080p').attr("href", data.magnetLink["1080p"]);
-        $('#myModal #download3D').attr("href", data.magnetLink["3D"]);
-    }
-    //toon de popup
-    $('#myModal').foundation('reveal', 'open', {
-        animation: 'fadeAndPop',
-        animation_speed: 250,
-        close_on_background_click: true,
-        dismiss_modal_class: 'close-reveal-modal',
-        bg_class: 'reveal-modal-bg',
-        root_element: 'body',
-        bg: $('.reveal-modal-bg'),
-        css: {
-            open: {
-                'opacity': 0,
-                'visibility': 'visible',
-                'display': 'block'
-            },
-            close: {
-                'opacity': 1,
-                'visibility': 'hidden',
-                'display': 'none'
-            }
+        $('#filmModal #trailer').attr("src", "http://www.youtube.com/embed/" + data.trailer);
+        $('#filmModal .button').attr("href", "#");
+        if (localStorage.getItem("downloadable") == "true") {
+            $('#filmModal #download720p').attr("href", data.magnetLink["720p"]);
+            $('#filmModal #download1080p').attr("href", data.magnetLink["1080p"]);
+            $('#filmModal #download3D').attr("href", data.magnetLink["3D"]);
         }
-    });
+        //toon de popup
+        $('#filmModal').foundation('reveal', 'open', {
+            animation: 'fadeAndPop',
+            animation_speed: 250,
+            close_on_background_click: true,
+            dismiss_modal_class: 'close-reveal-modal',
+            bg_class: 'reveal-modal-bg',
+            root_element: 'body',
+            bg: $('.reveal-modal-bg'),
+            css: {
+                open: {
+                    'opacity': 0,
+                    'visibility': 'visible',
+                    'display': 'block'
+                },
+                close: {
+                    'opacity': 1,
+                    'visibility': 'hidden',
+                    'display': 'none'
+                }
+            }
+        });
 
-    //    googleanalytics
-    trackname = data.imdbID + ' - ' + data.naam;
-    ga('send', 'pageview', trackname);
+        //    googleanalytics
+        trackname = data.imdbID + ' - ' + data.naam;
+        ga('send', 'pageview', trackname);
+    } else if (type == 'serie') {
+        console.log('serie');
+        //serie
+
+
+        //wijzig de informatie in de popup zodat deze past bij het filmitem.
+        $('#serieModal #titel').html(data.naam);
+        $('#serieModal #plot').html(data.plot);
+        $('#serieModal #genre').html(data.genre);
+        $('#serieModal #kwaliteit').html(data.kwaliteit);
+        $('#serieModal #rating').html(data.rating);
+        $('#serieModal #geupload').html(data.geupload);
+
+        //        $('#serieModal #trailer').attr("src", "http://www.youtube.com/embed/" + data.trailer);
+        $('#serieModal .button').attr("href", "#");
+
+        //        loop trough seasons
+        console.log(data);
+        $.each(data.season, function (index, value) {
+            //            $("#serieModal #seasons").append('<a href="#' + value.season + '"');
+            var season = index;
+            var data = value;
+
+            $.each(data['episode'], function (index, value) {
+                var episode = index;
+                var data = value;
+                //                console.log(data.magnetLink);
+                var downloads = data.magnetLink;
+                var link = '';
+                var quality = '';
+                if (downloads['1080p'] != undefined) {
+                    //                 1080p  
+                    link = downloads['1080p'].url;
+                    quality = '1080p';
+                } else if (downloads['720p'] != undefined) {
+                    //                 720p   
+                    link = downloads['720p'].url;
+                    quality = '720p';
+                } else if (downloads['480p'] != undefined) {
+                    //                 480p   
+                    link = downloads['480p'].url;
+                    quality = '480p';
+                } else {
+                    //                 undefined
+                    link = downloads['0'].url;
+                    quality = 'unknown';
+
+                }
+                $("#serieModal #episodes").prepend('<a href="' + link + '">season ' + season + ' episode ' + episode + ' - ' + quality + '</a><br>');
+            });
+
+        });
+
+        //        loop trough episodes
+
+        if (localStorage.getItem("downloadable") == "true") {
+            $('#serieModal #download720p').attr("href", data.magnetLink["720p"]);
+            $('#serieModal #download1080p').attr("href", data.magnetLink["1080p"]);
+            $('#serieModal #download3D').attr("href", data.magnetLink["3D"]);
+        }
+        //toon de popup
+        $('#serieModal').foundation('reveal', 'open', {
+            animation: 'fadeAndPop',
+            animation_speed: 250,
+            close_on_background_click: true,
+            dismiss_modal_class: 'close-reveal-modal',
+            bg_class: 'reveal-modal-bg',
+            root_element: 'body',
+            bg: $('.reveal-modal-bg'),
+            css: {
+                open: {
+                    'opacity': 0,
+                    'visibility': 'visible',
+                    'display': 'block'
+                },
+                close: {
+                    'opacity': 1,
+                    'visibility': 'hidden',
+                    'display': 'none'
+                }
+            }
+        });
+    }
 });
 
 /**
@@ -725,10 +729,7 @@ function setMaxMoviePosterHeight() {
     });
 }
 
-//stel opnieuw in als de browser een resize krijgt
-$(window).resize(function () {
-    setMaxMoviePosterHeight();
-});
+
 
 
 /*
