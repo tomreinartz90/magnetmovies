@@ -1,16 +1,16 @@
 var eztv = {
     socket: 'http://www.tomreinartz.com/magnetwall/socket.php?url=',
-    //    url: "http://eztvapi.re/",
-    url: "http://br.api.ptn.pm/",
+    url: "http://eztvapi.re/",
+    //    url: "http://br.api.ptn.pm/",
     settings: {
         keywords: '',
-        page: 1
+        set: 1
     },
     data: {},
     aantalItems: 0,
     getData: function () {
         console.log('eztv');
-        $.getJSON(eztv.socket + eztv.url + 'shows/' + eztv.settings.page + '?keywords=' + eztv.settings.keywords, function (data) {
+        $.getJSON(eztv.socket + eztv.url + 'shows/' + eztv.settings.set + '?keywords=' + eztv.settings.keywords, function (data) {
             log('loop');
             eztv.data = data;
             //haal de episodes op
@@ -30,7 +30,7 @@ var eztv = {
                 serieslijst[value._id] = serie;
                 eztv.getEpisodes(value._id);
             });
-
+            app.toonSerieItems();
         });
     },
     getEpisodes: function (imdbID) {
@@ -57,7 +57,7 @@ var eztv = {
                         serieslijst[imdbID].season[s].episode[e] = epi;
                     }
                 });
-                app.toonSerieItems();
+
             });
     }
 }

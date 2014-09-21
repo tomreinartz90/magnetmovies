@@ -15,9 +15,20 @@ var movieDB = {
         var url = movieDB.url + imdbID;
 
         //haal data op uit OMDB api.
-        $.getJSON(url, {
-            api_key: movieDB.settings.api_key
-        }, function (data) {
+        $.ajax({
+            url: url,
+            type: 'get',
+            data: {
+                api_key: movieDB.settings.api_key
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                if (jqXHR.status == 404 || errorThrown == 'Not Found') {
+                    movieDB.aantalItems += 1;
+                    filmlijst[imdbID] = null;
+                    delete filmlijst[imdbID];
+                }
+            }
+        }).done(function (data) {
             //console.log(data);
             filmlijst[imdbID].plot = data.overview;
             filmlijst[imdbID].poster = movieDB.imgUrl + data.poster_path;
@@ -40,7 +51,6 @@ var movieDB = {
                 } else {
                     filmlijst[imdbID].trailer = null;
                 }
-
                 return;
             });
 

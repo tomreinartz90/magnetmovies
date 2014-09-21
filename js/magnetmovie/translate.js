@@ -18,7 +18,6 @@ $.getJSON('js/lang/' + lang + '.json', function (data) {
  */
 function translate(langData) {
     //plaats taal informatie op de juiste plaats
-
     //stel genres in
     setGenres(langData.genres);
     setSorts(langData.sort);

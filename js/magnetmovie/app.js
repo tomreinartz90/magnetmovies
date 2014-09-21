@@ -20,6 +20,7 @@ function log(data) {
 //@prepros-prepend xbmc_socket.js
 //@prepros-prepend translate.js
 //@prepros-prepend modal.js
+//@prepros-prepend sidebar.js
 
 //variables
 var filmlijst = {};
@@ -44,6 +45,7 @@ var app = {
     run: function () {
         log(app.mode);
         status = 'run';
+        app.loader(true);
         if (app.mode == "movies") {
             //haal films op en verwerk deze
             yify.getData();
@@ -74,21 +76,29 @@ var app = {
         status == "klaar";
     },
     setMaxMoviePosterHeight: function () {
-        //set max-height in op standaard waarde
-        $(".filmitem img").css({
-            "height": ''
-        });
 
-        // lees hoogte van element uit
-        maxHeight = $(".filmitem img")[0].height;
+        if ($(".filmitem img").length > 1) {
+            //set max-height in op standaard waarde
+            $(".filmitem img").css({
+                "height": ''
+            });
 
-        //stel max-height in op alle img elementen
-        $(".filmitem img").css({
-            "height": maxHeight
-        });
+            // lees hoogte van element uit
+            maxHeight = $(".filmitem img")[0].height;
+
+            //stel max-height in op alle img elementen
+            $(".filmitem img").css({
+                "height": maxHeight
+            });
+        }
     },
     loader: function (show) {
         log('showloader ' + show)
+        if (show) {
+            $("body").append('<div id="loader" class="preloader"></div>');
+        } else {
+            $("#loader").remove();
+        }
     }
 
 }
@@ -130,6 +140,7 @@ $("#content").scroll(function () {
         } else if (app.mode == 'series') {
             //haal nieuwe set met data op.
             eztv.settings.set = eztv.settings.set + 1;
+            log(eztv.settings.set);
             eztv.data = {};
             //haal nieuwe data op
             app.run();

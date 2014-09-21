@@ -61,14 +61,24 @@
         <div class="inner-wrap fixed">
             <div class="row" style="max-width: 100%; height: 100%;">
                 <div id="standard-menu" class="small-0 medium-3 large-2 columns show-for-medium-up" style="overflow-y: auto; height: 100%;">
-                    <aside class="left-off-canvas-menu" style="left: 100%; width: 100%;">
+                    <aside class="left-off-canvas-menu" style="left: 100%; width: 100%; overflow-x: hidden">
+                        <ul class="mode row">
+                            <li class="button small-6 columns disabled mode-films" style="margin: 0;">
+                                Films
+                            </li>
+                            <li class="button small-6 columns mode-series" style="margin: 0;">
+                                Series
+                            </li>
+                        </ul>
+
                         <ul class="off-canvas-list zoeken film-zoeker">
                             <li>
                                 <label>Specificeer zoekinformatie</label>
                             </li>
                             <li>
                                 <label>Titel</label>
-                                <input type="text" name="keywords" id="keywords" placeholder="Film titel" />
+                                <input type="text" class="movie-search-term" name="keywords" list="movie-datalist" id="keywords" placeholder="Film titel" />
+                                <datalist id="movie-datalist"></datalist>
                             </li>
                             <li id="genre">
                                 <label class="navigation">genre</label>

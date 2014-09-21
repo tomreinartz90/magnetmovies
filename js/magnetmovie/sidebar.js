@@ -12,8 +12,42 @@ $(".off-canvas-list").on("click", ".navigation", function (event) {
 });
 
 
+$(".mode-films").on("click", function () {
+    $(this).addClass('disabled');
+    $('.film-zoeker').show();
+    $(".mode-series").removeClass('disabled');
+    //remove old items
+    $(".filmItemHouder").remove();
+    //sest mode to movies
+    app.mode = 'movies';
+    filmlijst = {};
+    serieslijst = {};
+    yify.settings.set = 1;
+    yify.data = {};
+    //haal nieuwe data op
+    app.run();
+});
+
+$(".mode-series").on("click", function () {
+    $(this).addClass('disabled');
+    $('.film-zoeker').hide();
+    $(".mode-films").removeClass('disabled');
+    //remove old items
+    $(".filmItemHouder").remove();
+    //set mode to series
+    app.mode = 'series';
+    filmlijst = {};
+    serieslijst = {};
+    //haal nieuwe set met data op.
+    eztv.settings.set = 1;
+    eztv.data = {};
+    //haal nieuwe data op
+    app.run();
+});
+
 $("#zoek").on("click", function () {
-    var settings = {
+    yify.settings = {
+        set: 1,
         limit: "50", //max 50
         rating: $(".zoeken #imdbRating").val(), //vanaf IMDB rating 7
         sort: $(".zoeken input[name=sort]:checked").val(),
@@ -23,5 +57,44 @@ $("#zoek").on("click", function () {
         order: $(".zoeken input[name=order]:checked").val() //desc asc //aflopend oplopend
     };
     //roep newWall functie aan
-    newWall(settings);
+    app.mode = 'movies';
+    filmlijst = {};
+    serieslijst = {};
+    yify.settings.set = 1;
+    yify.data = {};
+    //haal nieuwe data op
+    $(".filmItemHouder").remove();
+    app.run();
 });
+
+//autocomplete movie title
+/*$('.movie-search-term').on("input click", function (e) {
+    var val = $(this).val();
+    dataList = $('#movie-datalist');
+    dataList.empty();
+
+    if (val === "" || val.length < 3) return;
+    log(val);
+    $.ajax({
+        type: "GET",
+        url: 'http://api.themoviedb.org/3/search/movie',
+        async: false,
+        data: {
+            api_key: movieDB.settings.api_key,
+            query: val
+        },
+        success: function (data) {
+            if (data.results.length) {
+                log(data);
+                for (var i = 0, len = data.results.length; i < len; i++) {
+                    var opt = $("<option></option>").attr("value", data.results[i]['title']);
+                    //tempObj[data.results[i]['city']] = data.results[i]['id'];
+
+                    dataList.append(opt);
+                }
+            }
+        }
+
+    });
+
+});*/

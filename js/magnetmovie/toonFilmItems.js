@@ -23,7 +23,7 @@ FilmItems = {
         film += '<img width="100%" src="' + data.poster + '"/></a><h5>' + data.naam + '</h5><h6>' + data.uitgebracht + '';
 
         if (activateDownloads == "true") {
-            film += '<br/>';
+            //            film += '<br/>';
             if (data.magnetLink["720p"] != undefined) {
                 film += ' <a href="' + data.magnetLink["720p"] + '">720p</a>';
             }
@@ -31,7 +31,7 @@ FilmItems = {
                 film += ' <a href="' + data.magnetLink["1080p"] + '">1080p</a>';
             }
             if (data.magnetLink["3D"] != undefined) {
-                film += ' <a href="' + data.magnetLink["3D"] + '">3D</a>';
+                //                film += ' <a href="' + data.magnetLink["3D"] + '">3D</a>';
             }
         }
         film += '</h6></div> ';
