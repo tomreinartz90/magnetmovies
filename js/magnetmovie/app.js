@@ -8,9 +8,6 @@ function log(data) {
 }
 
 // functions
-
-
-
 //@prepros-prepend movieDBprovider.js
 //@prepros-prepend movieprovider.js
 //@prepros-prepend serieprovider.js
@@ -27,14 +24,25 @@ var filmlijst = {};
 var aantalFilms = 0;
 var serieslijst = {};
 var status = 'wachten';
-var activateDownloads = localStorage.getItem("activateDownloads");
+var activateDownloads = localStorage.getItem("downloadable");
 //activateDownloads = true;
 if (activateDownloads == "true") {
     log('downloads activated')
 }
 
+$('#XBMCadress').focusout(function () {
+    var url = this.value;
+    if ((url == 'activatedownloads') || (url == 'download') || (url == 'ActivateDownloads') || (url == 'activateDownloads')) {
+        localStorage.setItem("downloadable", true);
+        alert('you can now download');
+    } else {
+        alert('This function is not finished at this moment');
+    }
+
+});
+
 function activateDownload() {
-    localStorage.setItem("activateDownloads", true)
+    localStorage.setItem("downloadable", true)
 }
 
 

@@ -140,3 +140,14 @@ ul.mode {
 div.switch label {
     width: 95%%;
 }
+.mobile-search {
+    display: block;
+    position: fixed;
+    width: 6rem;
+    height: 6rem;
+    content: 'search';
+    bottom: 1rem;
+    left: 0;
+    z-index: 900;
+    background-color: red;
+}

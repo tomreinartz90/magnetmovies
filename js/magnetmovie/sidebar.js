@@ -67,34 +67,42 @@ $("#zoek").on("click", function () {
     app.run();
 });
 
+//Mobile search
+$('.mobile-search').on('click', function () {
+    $('#standard-menu').toggleClass('show-for-medium-up');
+});
+
+
 //autocomplete movie title
-/*$('.movie-search-term').on("input click", function (e) {
+/*$('.movie - search - term ').on("input click", function (e) {
     var val = $(this).val();
-    dataList = $('#movie-datalist');
+    dataList = $('#
+movie - datalist ');
     dataList.empty();
 
     if (val === "" || val.length < 3) return;
     log(val);
     $.ajax({
         type: "GET",
-        url: 'http://api.themoviedb.org/3/search/movie',
-        async: false,
-        data: {
-            api_key: movieDB.settings.api_key,
-            query: val
-        },
-        success: function (data) {
-            if (data.results.length) {
-                log(data);
-                for (var i = 0, len = data.results.length; i < len; i++) {
-                    var opt = $("<option></option>").attr("value", data.results[i]['title']);
-                    //tempObj[data.results[i]['city']] = data.results[i]['id'];
+        url: '
+http: //api.themoviedb.org/3/search/movie',
+async: false,
+data: {
+    api_key: movieDB.settings.api_key,
+    query: val
+},
+success: function (data) {
+    if (data.results.length) {
+        log(data);
+        for (var i = 0, len = data.results.length; i < len; i++) {
+            var opt = $("<option></option>").attr("value", data.results[i]['title']);
+            //tempObj[data.results[i]['city']] = data.results[i]['id'];
 
-                    dataList.append(opt);
-                }
-            }
+            dataList.append(opt);
         }
+    }
+}
 
-    });
+});
 
-});*/
+}); * //*/
