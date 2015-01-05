@@ -13,6 +13,7 @@ var eztv = {
         $.getJSON(eztv.socket + eztv.url + 'shows/' + eztv.settings.set + '?keywords=' + eztv.settings.keywords, function (data) {
             log('loop');
             eztv.data = data;
+            console.log(data);
             //haal de episodes op
             $.each(data, function (index, value) {
                 serie = {};
@@ -25,10 +26,13 @@ var eztv = {
                 serie.rating = value.MovieRating;
                 serie.imdbID = value._id;
                 serie.num = yify.aantalItems;
+                serie.movieDBid = 0;
+                serie.movieDBData = {};
                 serie.season = {};
                 s = 1
                 serieslijst[value._id] = serie;
                 eztv.getEpisodes(value._id);
+                app.getMovieDBserieData(value._id);
             });
             app.toonSerieItems();
         });

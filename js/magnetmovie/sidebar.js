@@ -3,73 +3,77 @@
  * open als accordeon als er op een label geklikt wordt
  */
 $(".off-canvas-list").on("click", ".navigation", function (event) {
-    if ($(this).parent().hasClass("open")) {
-        $(this).parent().removeClass("open");
-    } else {
-        $(".off-canvas-list .open").removeClass("open");
-        $(this).parent().addClass("open");
-    }
+  if ($(this).parent().hasClass("open")) {
+    $(this).parent().removeClass("open");
+  } else {
+    $(".off-canvas-list .open").removeClass("open");
+    $(this).parent().addClass("open");
+  }
 });
 
 
 $(".mode-films").on("click", function () {
-    $(this).addClass('disabled');
-    $('.film-zoeker').show();
-    $(".mode-series").removeClass('disabled');
-    //remove old items
-    $(".filmItemHouder").remove();
-    //sest mode to movies
-    app.mode = 'movies';
-    filmlijst = {};
-    serieslijst = {};
-    yify.settings.set = 1;
-    yify.data = {};
-    //haal nieuwe data op
-    app.run();
+  $(this).addClass('disabled');
+  $('.film-zoeker').show();
+  $(".mode-series").removeClass('disabled');
+  //remove old items
+  $(".filmItemHouder").remove();
+  //sest mode to movies
+  localStorage.setItem('app.mode', 'movies');
+  app.mode = 'movies';
+  filmlijst = {};
+  serieslijst = {};
+  yify.settings.set = 1;
+  yify.data = {};
+  //haal nieuwe data op
+  app.run();
 });
 
 $(".mode-series").on("click", function () {
-    $(this).addClass('disabled');
-    $('.film-zoeker').hide();
-    $(".mode-films").removeClass('disabled');
-    //remove old items
-    $(".filmItemHouder").remove();
-    //set mode to series
-    app.mode = 'series';
-    filmlijst = {};
-    serieslijst = {};
-    //haal nieuwe set met data op.
-    eztv.settings.set = 1;
-    eztv.data = {};
-    //haal nieuwe data op
-    app.run();
+  $(this).addClass('disabled');
+  $('.film-zoeker').hide();
+  $(".mode-films").removeClass('disabled');
+  //remove old items
+  $(".filmItemHouder").remove();
+  //set mode to series
+  
+  localStorage.setItem('app.mode', 'series');
+  app.mode = 'series';
+  filmlijst = {};
+  serieslijst = {};
+  //haal nieuwe set met data op.
+  eztv.settings.set = 1;
+  eztv.data = {};
+  //haal nieuwe data op
+  app.run();
 });
 
 $("#zoek").on("click", function () {
-    yify.settings = {
-        set: 1,
-        limit: "50", //max 50
-        rating: $(".zoeken #imdbRating").val(), //vanaf IMDB rating 7
-        sort: $(".zoeken input[name=sort]:checked").val(),
-        quality: $(".zoeken input[name=quality]:checked").val(), //All, 720p 1080p 3D
-        keywords: $(".zoeken #keywords").val(),
-        genre: $(".zoeken input[name=genre]:checked").val(),
-        order: $(".zoeken input[name=order]:checked").val() //desc asc //aflopend oplopend
-    };
-    //roep newWall functie aan
-    app.mode = 'movies';
-    filmlijst = {};
-    serieslijst = {};
-    yify.settings.set = 1;
-    yify.data = {};
-    //haal nieuwe data op
-    $(".filmItemHouder").remove();
-    app.run();
+  yify.settings = {
+    set: 1,
+    limit: "30", //max 50
+    rating: $(".zoeken #imdbRating").val(), //vanaf IMDB rating 7
+    sort: $(".zoeken input[name=sort]:checked").val(),
+    quality: $(".zoeken input[name=quality]:checked").val(), //All, 720p 1080p 3D
+    keywords: $(".zoeken #keywords").val(),
+    genre: $(".zoeken input[name=genre]:checked").val(),
+    order: $(".zoeken input[name=order]:checked").val() //desc asc //aflopend oplopend
+  };
+  //roep newWall functie aan
+  localStorage.setItem('app.mode', 'movies');
+  app.mode = 'movies';
+  filmlijst = {};
+  serieslijst = {};
+  yify.settings.set = 1;
+  yify.data = {};
+  //haal nieuwe data op
+  $(".filmItemHouder").remove();
+  app.run();
 });
 
 //Mobile search
 $('.mobile-search').on('click', function () {
-    $('#standard-menu').toggleClass('show-for-medium-up');
+  $('#standard-menu').toggleClass('show-for-medium-up');
 });
 
 

@@ -4,7 +4,7 @@
 var yify = {
     url: "https://yts.re/api/list.json",
     settings: {
-        limit: "50", //max 50
+        limit: "30", //max 50
         set: 1,
         rating: "6", //vanaf IMDB rating 7
         sort: "seeds",
@@ -15,7 +15,7 @@ var yify = {
     },
     data: {},
     aantalItems: 0,
-    getData: function () {
+    getData: function () { 
         //haal data op uit YIFY api.
         yify.data = $.getJSON(yify.url, yify.settings).done(function () {
             //controleer of data succesvol is opgehaald aan de hand van de status. Als het niet goed is opgehaald probeer het dan nogmaals.
@@ -27,6 +27,5 @@ var yify = {
                 yify.getData();
             }
         });
-        í
     }
 }

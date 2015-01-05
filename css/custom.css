@@ -5,7 +5,10 @@ h2,
 h3,
 h4,
 h5,
-h6,
+h6 { 
+ color:  #f7f7f7;
+  
+}
 body,
 .reveal-modal {
     background-color: #434040;
@@ -125,11 +128,13 @@ body {
 .off-canvas-list > li.open .content {
     display: block
 }
+/*
 dialog .close-reveal-modal,
 .reveal-modal .close-reveal-modal {
     right: -2rem;
     background-color: transparent;
-}
+}*/
+
 .filmItemHouder {
     margin-bottom: 1.5rem;
 }
@@ -149,5 +154,23 @@ div.switch label {
     bottom: 1rem;
     left: 0;
     z-index: 900;
-    background-color: red;
+    background-color: #53D27F;
+}
+
+#serieModal { 
+  background-size: cover;
+  padding: 0;
+}
+#serieModal > .row { 
+ background-color: rgba(0,0,0,.7);
+  padding: 1rem;
+}
+.episodes .button { 
+  padding: 0.6rem;
+  margin-bottom: 0.5rem;
+  text-align: left;
+}
+
+.hideXBMC { 
+  display: none; 
 }
