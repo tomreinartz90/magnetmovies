@@ -171,7 +171,7 @@ $("#content").scroll(function () {
     //        loader(true);
     if (app.mode == 'movies') {
       //haal nieuwe set met data op.
-      yify.settings.set = yify.settings.set + 1;
+      yify.settings.page = yify.settings.page + 1;
       yify.data = {};
       //haal nieuwe data op
       app.run();

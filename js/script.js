@@ -578,6 +578,8 @@ $("#content").on("click", ".filmitem", function (event) {
         $('#filmModal #kwaliteit').html(data.kwaliteit);
         $('#filmModal #rating').html(data.rating);
         $('#filmModal #geupload').html(data.geupload);
+      
+        
 
         $('#filmModal #trailer').attr("src", "http://www.youtube.com/embed/" + data.trailer);
         $('#filmModal .button').attr("href", "#");

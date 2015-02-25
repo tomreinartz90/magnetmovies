@@ -2,16 +2,16 @@
  *Basis Variablen API
  */
 var yify = {
-    url: "https://yts.re/api/list.json",
+    url: "https://yts.re/api/v2/list_movies.json",
     settings: {
         limit: "30", //max 50
-        set: 1,
-        rating: "6", //vanaf IMDB rating 7
-        sort: "seeds",
+        page: 1,
+        minimum_rating: "6", //vanaf IMDB rating 7
+        sort_by: "seeds",
         quality: "ALL", //All, 720p 1080p 3D
-        keywords: "",
+        query_term: "",
         genre: "all",
-        order: "desc" //desc asc //aflopend oplopend
+        order_by: "desc" //desc asc //aflopend oplopend
     },
     data: {},
     aantalItems: 0,

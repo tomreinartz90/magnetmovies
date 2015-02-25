@@ -23,7 +23,7 @@ $(".mode-films").on("click", function () {
   app.mode = 'movies';
   filmlijst = {};
   serieslijst = {};
-  yify.settings.set = 1;
+  yify.settings.page = 1;
   yify.data = {};
   //haal nieuwe data op
   app.run();
@@ -50,21 +50,21 @@ $(".mode-series").on("click", function () {
 
 $("#zoek").on("click", function () {
   yify.settings = {
-    set: 1,
+    page: 1,
     limit: "30", //max 50
-    rating: $(".zoeken #imdbRating").val(), //vanaf IMDB rating 7
-    sort: $(".zoeken input[name=sort]:checked").val(),
+    minimum_rating: $(".zoeken #imdbRating").val(), //vanaf IMDB rating 7
+    sort_by: $(".zoeken input[name=sort]:checked").val(),
     quality: $(".zoeken input[name=quality]:checked").val(), //All, 720p 1080p 3D
-    keywords: $(".zoeken #keywords").val(),
+    query_term: $(".zoeken #keywords").val(),
     genre: $(".zoeken input[name=genre]:checked").val(),
-    order: $(".zoeken input[name=order]:checked").val() //desc asc //aflopend oplopend
+    order_by: $(".zoeken input[name=order]:checked").val() //desc asc //aflopend oplopend
   };
   //roep newWall functie aan
   localStorage.setItem('app.mode', 'movies');
   app.mode = 'movies';
   filmlijst = {};
   serieslijst = {};
-  yify.settings.set = 1;
+  yify.settings.page = 1;
   yify.data = {};
   //haal nieuwe data op
   $(".filmItemHouder").remove();

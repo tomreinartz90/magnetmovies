@@ -9,7 +9,7 @@ var xbmc = {
       },
       "id": "1"
     },
-    data: null,
+    data: undefined,
     list: []
   },
   series: {
@@ -34,6 +34,9 @@ var xbmc = {
   getData: function () {},
   hideMovieItems: function () {
     // loop trough each item and make magic
+    if(xbmc.movies.data === undefined){
+     return; 
+    }
     $.each(xbmc.movies.data.result.movies, function (index, value) {
       //console.log(xbmc.list);
       if (filmlijst[value.imdbnumber] != undefined) {
@@ -60,7 +63,7 @@ xbmc.connect = function () {
   status = "busy";
 //  xbmc.url = localStorage.getItem('xbmcUrl');
   console.log("Begin met ophalen xbmc data");
-  if(xbmc.movies.data.result === undefined){
+  if(xbmc.movies.data){
     xbmc.Socket.connect(xbmc.url, "9090");
   }
 }
@@ -77,7 +80,7 @@ xbmc.getData = function () {
         //series informatie ophalen
         xbmc.Socket.send(xbmc.series.settings.method, xbmc.series.settings.params, xbmc.series.settings.id, getXbmcSeries);
     }*/
-  if (xbmc.movies.data == null || xbmc.series.data == null) {} {
+  if (xbmc.movies.data == null && xbmc.series.data == null) {} {
     //loopje
     setTimeout(xbmc.getData, 500);
   }
@@ -87,7 +90,7 @@ xbmc.getData = function () {
 function getXbmcMovies(XBMCdata) {
   //reset data;
   console.log('movies');
-  xbmc.data = {};
+  xbmc.movies.data = {};
   //convert json string to json data
   XBMCdata = $.parseJSON(XBMCdata);
   //    set xbmc.data
