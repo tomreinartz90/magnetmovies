@@ -1,6 +1,6 @@
 var movieDB = {
   url: "https://api.themoviedb.org/3/movie/",
-  imgUrl: "http://image.tmdb.org/t/p/w500/",
+  imgUrl: "http://image.tmdb.org/t/p/w185",
   settings: {
     api_key: "ffbd2b663d53a66c2dd00bb517491490",
   },
@@ -10,7 +10,7 @@ var movieDB = {
       return;
     }
 
-    movieStorage = JSON.parse(localStorage.getItem('movieStorage'));
+    /*movieStorage = JSON.parse(localStorage.getItem('movieStorage'));
     if (movieStorage[imdbID] !== undefined) {
       movieDB.processData(movieStorage[imdbID], imdbID);
       movieDBserie.aantalItems += 1;
@@ -18,7 +18,7 @@ var movieDB = {
         log('movieDBserie informatie opgehaald')
       }
       return;
-    }
+    }*/
 
     //vorm url om JSON data op te halen
     var url = movieDB.url + imdbID;
